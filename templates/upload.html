@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Video - Em-Prit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+
+        .upload-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        input[type="file"]::file-selector-button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background-color: #2563eb;
+        }
+
+        /* Styling for the loading spinner */
+        .loader {
+            border-top-color: #3498db;
+            /* blue */
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+        <div class="text-center text-white">
+            <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-24 w-24 mb-4 mx-auto">
+            </div>
+            <h2 class="text-xl font-semibold">Menganalisis Video...</h2>
+            <p>Proses ini mungkin memakan waktu beberapa saat. Mohon tunggu.</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-4">
+        <header class="text-center my-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-700">Analisis Video</h1>
+            <p class="text-md text-gray-500 mt-2">Unggah video untuk mendeteksi burung dan dapatkan timestamp.</p>
+        </header>
+        <div class="upload-container">
+            <h2 class="text-2xl font-bold mb-6 text-center">Pilih Video untuk Dianalisis</h2>
+            <!-- Added an ID to the form -->
+            <form id="upload-form" action="{{ url_for('analyze_video') }}" method="post" enctype="multipart/form-data">
+                <div class="mb-6">
+                    <label for="video" class="block mb-2 text-sm font-medium text-gray-900">File Video</label>
+                    <input type="file" name="video" id="video"
+                        class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                        accept="video/mp4,video/x-m4v,video/*" required>
+                </div>
+                <button type="submit"
+                    class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-3 text-center">
+                    Analisis Video
+                </button>
+            </form>
+            <div class="mt-6 text-center">
+                <a href="{{ url_for('index') }}" class="text-sm text-blue-600 hover:underline">
+                    Kembali ke Menu Utama
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to show the loading overlay on form submission
+        document.getElementById('upload-form').addEventListener('submit', function () {
+            const videoInput = document.getElementById('video');
+            // Only show loader if a file is actually selected
+            if (videoInput.files.length > 0) {
+                document.getElementById('loading-overlay').classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
