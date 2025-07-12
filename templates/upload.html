@@ -36,10 +36,8 @@
             background-color: #2563eb;
         }
 
-        /* Styling for the loading spinner */
         .loader {
             border-top-color: #3498db;
-            /* blue */
             -webkit-animation: spinner 1.5s linear infinite;
             animation: spinner 1.5s linear infinite;
         }
@@ -68,7 +66,6 @@
 
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Loading Overlay -->
     <div id="loading-overlay" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
         <div class="text-center text-white">
             <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-24 w-24 mb-4 mx-auto">
@@ -85,7 +82,6 @@
         </header>
         <div class="upload-container">
             <h2 class="text-2xl font-bold mb-6 text-center">Pilih Video untuk Dianalisis</h2>
-            <!-- Added an ID to the form -->
             <form id="upload-form" action="{{ url_for('analyze_video') }}" method="post" enctype="multipart/form-data">
                 <div class="mb-6">
                     <label for="video" class="block mb-2 text-sm font-medium text-gray-900">File Video</label>
@@ -107,10 +103,8 @@
     </div>
 
     <script>
-        // JavaScript to show the loading overlay on form submission
         document.getElementById('upload-form').addEventListener('submit', function () {
             const videoInput = document.getElementById('video');
-            // Only show loader if a file is actually selected
             if (videoInput.files.length > 0) {
                 document.getElementById('loading-overlay').classList.remove('hidden');
             }

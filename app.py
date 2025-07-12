@@ -1,14 +1,3 @@
-# app.py
-# Main application for the Em-Prit Bird Detection System.
-# This version provides a choice between live webcam detection and video file analysis.
-#
-# To run:
-# 1. Create a folder named 'static' and another named 'templates'.
-# 2. Place this file in the root folder. Place all .html files in 'templates'.
-# 3. Install libraries: pip install -r requirements.txt
-# 4. Run the script: python app.py
-# 5. Open your web browser and go to http://127.0.0.1:5000
-
 import os
 import cv2
 from flask import Flask, render_template, request, redirect, url_for, Response
@@ -18,13 +7,10 @@ import math
 
 app = Flask(__name__)
 
-# --- Configuration ---
 UPLOAD_FOLDER = "static"
 ALLOWED_EXTENSIONS = {"mp4", "mov", "avi", "mkv"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# --- AI Model Configuration ---
-# Load the model once to be used by both live feed and analysis
 try:
     model = YOLO("yolov8n.pt")
     print("YOLOv8n model loaded successfully.")
@@ -50,8 +36,6 @@ def format_time(seconds):
 
 
 # --- Routes ---
-
-
 @app.route("/")
 def index():
     """Main page with choices for live feed or video upload."""
